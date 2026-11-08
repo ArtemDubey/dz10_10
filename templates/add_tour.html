@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Додати новий тур{% endblock %}
+
+{% block content %}
+<h1>Додати новий тур</h1>
+<p>Заповніть форму нижче, щоб додати новий тур до нашої бази даних.</p>
+
+<form method="POST" class="tour-form">
+    <label for="title">Назва туру:</label>
+    <input type="text" id="title" name="title" required placeholder="Наприклад: Карпатські канікули">
+
+    <label for="description">Опис туру:</label>
+    <textarea id="description" name="description" rows="4" placeholder="Короткий опис або особливості туру..."></textarea>
+
+    <label for="price">Ціна за людину ($):</label>
+    <input type="number" id="price" name="price" step="0.01" required min="0" placeholder="Наприклад: 350">
+
+    <label for="image">Фото :</label>
+    <input type="text" id="image" name="image" required>
+    <label for="season">Найкращий сезон:</label>
+    <select id="season" name="season" style="padding: 14px 18px; font-size: 15px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; background-color: rgba(15, 23, 42, 0.6); color: #ffffff; outline: none;">
+        <option value="Зима">Зима</option>
+        <option value="Літо">Літо</option>
+        <option value="Осінь">Осінь</option>
+        <option value="Весна">Весна</option>
+        <option value="Універсальний" selected>Універсальний (будь-який сезон)</option>
+    </select>
+
+    <button type="submit">Додати тур</button>
+</form>
+
+<br>
+<a href="{{ url_for('tours') }}" class="back-link">← Назад до списку турів</a>
+{% endblock %}

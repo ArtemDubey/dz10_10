@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Туристична агенція{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="burger-menu" id="burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="nav-links" id="nav-links">
+                <a href="{{ url_for('index') }}">Головна</a>
+                <a href="{{ url_for('about') }}">Про нас</a>
+                <a href="{{ url_for('tours') }}">Тури</a>
+                <a href="{{ url_for('pick_tour') }}">Підбір туру</a>
+                <a href="{{ url_for('add_tour') }}">Додати тур</a>
+                <a href="{{ url_for('gallery') }}">Галерея</a>
+                <a href="{{ url_for('contacts') }}">Контакти</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Туристична агенція.</p>
+    </footer>
+    <script>
+        const burger = document.getElementById('burger');
+        const navLinks = document.getElementById('nav-links');
+
+        burger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            burger.classList.toggle('toggle');
+        });
+    </script>
+</body>
+</html>

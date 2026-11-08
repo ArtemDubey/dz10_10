@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Головна - Туристична агенція{% endblock %}
+
+{% block content %}
+    <h1>Ласкаво просимо до нашої туристичної агенції!</h1>
+    <div class="banner">
+        <img src="{{ url_for('static', filename='images/banner.png') }}" alt="Банер агенції">
+    </div>
+    <p>Відкривайте для себе найдивовижніші куточки світу разом із нами. Надійні тури, найкращі ціни та незабутні емоції!</p>
+{% endblock %}

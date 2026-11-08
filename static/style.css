@@ -1,0 +1,464 @@
+:root {
+    --bg-main: #090d16;
+    --surface: #111827;
+    --primary: #06b6d4;          /* Неоновий блакитний акцент */
+    --primary-hover: #22d3ee;
+    --dark-slate: #f8fafc;
+    --text-main: #e2e8f0;        /* Головний світлий текст для читабельності */
+    --text-muted: #94a3b8;
+    --border-light: rgba(6, 182, 212, 0.2); /* Неонова напівпрозора рамка */
+
+    --btn-edit-bg: rgba(14, 165, 233, 0.15);
+    --btn-edit-text: #38bdf8;
+    --btn-edit-hover: rgba(14, 165, 233, 0.3);
+
+    --btn-delete-bg: rgba(244, 63, 94, 0.15);
+    --btn-delete-text: #fb7185;
+    --btn-delete-hover: rgba(244, 63, 94, 0.3);
+
+    --neon-glow: 0 0 20px rgba(6, 182, 212, 0.25);
+    --neon-glow-hover: 0 0 30px rgba(6, 182, 212, 0.5);
+    --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    line-height: 1.7;
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- ШАПКА ТА НАВІГАЦІЯ --- */
+header {
+    background: rgba(17, 24, 39, 0.85);
+    backdrop-filter: blur(12px);
+    padding: 18px 40px;
+    border-bottom: 1px solid var(--border-light);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 8px 18px;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+nav a:hover {
+    color: var(--primary);
+    background-color: rgba(6, 182, 212, 0.08);
+    border-color: rgba(6, 182, 212, 0.3);
+    box-shadow: 0 0 15px rgba(6, 182, 212, 0.2);
+    transform: translateY(-2px);
+}
+
+/* --- БУРГЕР-МЕНЮ (СТАНДАРТНО СХОВАНЕ НА ПК) --- */
+.burger-menu {
+    display: none;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 5px;
+    padding: 5px;
+    z-index: 1001;
+}
+
+.burger-menu span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: #ffffff;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.nav-links {
+    display: flex;
+    gap: 12px;
+}
+
+/* --- ГОЛОВНИЙ КОНТЕЙНЕР ІЗ НЕОНОВОЮ ОБВОДКОЮ --- */
+.container {
+    padding: 50px;
+    max-width: 1100px;
+    margin: 40px auto;
+    background: var(--surface);
+    min-height: 70vh;
+    box-shadow: var(--shadow-card);
+    border-radius: 24px;
+    border: 1px solid var(--border-light);
+    position: relative;
+    overflow: hidden;
+}
+
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    animation: scanline 4s linear infinite;
+}
+
+@keyframes scanline {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(1000%); }
+}
+
+/* --- ТИПОГРАФІКА --- */
+h1 {
+    font-size: 34px;
+    color: #ffffff;
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    position: relative;
+    padding-bottom: 12px;
+}
+
+h1::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), #3b82f6);
+    border-radius: 2px;
+    box-shadow: 0 0 10px var(--primary);
+}
+
+h2, h3 {
+    color: #f1f5f9;
+    font-weight: 700;
+}
+
+p {
+    color: var(--text-muted);
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+/* --- БАНЕР --- */
+.banner {
+    margin: 30px 0;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-card);
+}
+
+.banner img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.banner img:hover {
+    transform: scale(1.03);
+}
+
+/* --- СІТКА ТУРІВ ТА ГАЛЕРЕЇ --- */
+.tours-grid, .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+}
+
+/* --- КАРТКА ТУРУ З НЕОНОВИМ HOVER --- */
+.tour-card {
+    background: rgba(30, 41, 59, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: var(--shadow-card);
+}
+
+.tour-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--primary);
+    box-shadow: var(--neon-glow-hover);
+}
+
+.tour-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.tour-card:hover img {
+    transform: scale(1.05);
+}
+
+.tour-card h3 {
+    margin: 22px 22px 10px 22px;
+    font-size: 20px;
+    color: #ffffff;
+}
+
+.tour-card p {
+    margin: 0 22px 15px 22px;
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+.price {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--primary) !important;
+    text-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+    margin: 0 22px 20px 22px !important;
+}
+
+/* --- КНОПКИ УПРАВЛІННЯ НА КАРТЦІ (ІДЕАЛЬНО РІВНІ) --- */
+.card-actions {
+    display: flex;
+    gap: 12px;
+    padding: 0 22px 22px 22px;
+}
+
+.card-actions > * {
+    flex: 1;
+    margin: 0;
+}
+
+.tour-card .edit-btn,
+.delete-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 42px;
+    padding: 0 15px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: all 0.25s ease;
+}
+
+.tour-card .edit-btn {
+    background-color: var(--btn-edit-bg);
+    color: var(--btn-edit-text);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.tour-card .edit-btn:hover {
+    background-color: var(--btn-edit-hover);
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+    transform: translateY(-1px);
+}
+
+.delete-btn {
+    background-color: var(--btn-delete-bg);
+    color: var(--btn-delete-text);
+    border: 1px solid rgba(251, 113, 133, 0.3);
+}
+
+.delete-btn:hover {
+    background-color: var(--btn-delete-hover);
+    box-shadow: 0 0 15px rgba(251, 113, 133, 0.4);
+    transform: translateY(-1px);
+}
+
+/* --- ГАЛЕРЕЯ --- */
+.gallery-grid img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: var(--shadow-card);
+    transition: all 0.35s ease;
+}
+
+.gallery-grid img:hover {
+    transform: scale(1.04);
+    border-color: var(--primary);
+    box-shadow: var(--neon-glow);
+}
+
+/* --- ФОРМИ --- */
+.tour-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 520px;
+    gap: 18px;
+    background: rgba(30, 41, 59, 0.4);
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-card);
+    margin-top: 25px;
+}
+
+.tour-form label {
+    font-weight: 600;
+    color: #f1f5f9;
+    font-size: 14px;
+}
+
+.tour-form input,
+.tour-form textarea {
+    padding: 14px 18px;
+    font-size: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    outline: none;
+    transition: all 0.25s ease;
+    background-color: rgba(15, 23, 42, 0.6);
+    color: #ffffff;
+}
+
+.tour-form input:focus,
+.tour-form textarea:focus {
+    border-color: var(--primary);
+    background-color: rgba(15, 23, 42, 0.9);
+    box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
+}
+
+.tour-form button[type="submit"] {
+    padding: 14px;
+    background: linear-gradient(135deg, var(--primary), #2563eb);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4);
+}
+
+.tour-form button[type="submit"]:hover {
+    box-shadow: 0 0 25px rgba(6, 182, 212, 0.7);
+    transform: translateY(-2px);
+}
+
+.tour-form button[type="submit"]:active {
+    transform: scale(0.98);
+}
+
+/* ПОСИЛАННЯ НАЗАД */
+.back-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.back-link:hover {
+    color: var(--primary-hover);
+    text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+    text-decoration: underline;
+}
+
+/* --- ПІДВАЛ --- */
+footer {
+    text-align: center;
+    padding: 35px;
+    background-color: #090d16;
+    border-top: 1px solid var(--border-light);
+    color: var(--text-muted);
+    margin-top: 70px;
+    font-size: 14px;
+}
+
+/* --- АДАПТИВНІСТЬ ТА БУРГЕР-МЕНЮ (ПО ЦЕНТРУ) --- */
+@media (max-width: 768px) {
+    nav {
+        justify-content: center; /* Центруємо елементи в шапці */
+        position: relative;
+    }
+
+    .burger-menu {
+        display: flex; /* Показуємо іконку бургера */
+    }
+
+    .nav-links {
+        display: none; /* Ховаємо звичайне горизонтальне меню */
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: rgba(17, 24, 39, 0.98);
+        backdrop-filter: blur(12px);
+        padding: 20px 0;
+        text-align: center;
+        border-bottom: 1px solid var(--border-light);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+        gap: 0;
+    }
+
+    .nav-links.active {
+        display: flex; /* Показуємо випадаюче меню при кліку */
+    }
+
+    .nav-links a {
+        padding: 12px 0;
+        font-size: 16px;
+        border-radius: 0;
+    }
+
+    /* Анімація бургера у хрестик */
+    .burger-menu.toggle span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+    .burger-menu.toggle span:nth-child(2) {
+        opacity: 0;
+    }
+    .burger-menu.toggle span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -6px);
+    }
+
+    .container {
+        padding: 25px;
+        margin: 15px;
+        border-radius: 16px;
+    }
+
+    header {
+        padding: 15px 20px;
+    }
+}

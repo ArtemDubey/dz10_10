@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Доступні тури{% endblock %}
+
+{% block content %}
+<h1>Доступні тури</h1>
+
+<div class="tours-grid">
+    {% for tour in tours %}
+        <div class="tour-card">
+            {% if tour['image'] %}
+    <img src="{{ url_for('static', filename='images/' + tour['image']) }}"
+         alt="{{ tour['title'] }}">
+{% endif %}
+            <h3>{{ tour['title'] }}</h3>
+            <p>{{ tour['description'] }}</p>
+            <p style="margin: 5px 22px; font-size: 14px; color: var(--primary);">
+                🌸 Найкращий сезон: <strong>{{ tour['season'] }}</strong>
+            </p>
+            <div style="margin: 10px 22px; font-size: 14px; color: #94a3b8;">
+                <p>Базова ціна: {{ tour['base_price'] }} $</p>
+                <p style="font-size: 13px; color: {% if '-' in tour['price_info'] %}#34d399{% else %}#fb7185{% endif %};">
+                    {{ tour['price_info'] }}
+                </p>
+                <p class="price" style="margin-top: 5px; font-size: 18px; color: #ffffff;">
+                    Фінальна ціна: <strong>{{ tour['final_price'] }} $</strong>
+                </p>
+            </div>
+
+            <div class="card-actions" style="display: flex; gap: 10px; padding: 0 22px 20px 22px;">
+                <a href="{{ url_for('edit_tour', id=tour['id']) }}" class="edit-btn" style="flex: 1; text-align: center; padding: 10px; background: rgba(56, 189, 248, 0.1); border: 1px solid var(--primary); border-radius: 8px; color: var(--primary); text-decoration: none;">Редагувати</a>
+                <form action="{{ url_for('delete_tour', id=tour['id']) }}" method="POST" style="flex: 1; margin: 0;">
+                    <button type="submit" style="width: 100%; padding: 10px; background: rgba(244, 63, 94, 0.1); border: 1px solid #f43f5e; border-radius: 8px; color: #f43f5e; cursor: pointer;">Видалити</button>
+                </form>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<br>
+<a href="{{ url_for('index') }}" class="back-link">← На головну</a>
+{% endblock %}
